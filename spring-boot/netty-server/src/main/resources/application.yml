@@ -1,0 +1,8 @@
+# netty配置
+netty:
+  # 端口号
+  port: 12345
+  # 最大线程数
+  maxThreads: 1024
+  # 数据包的最大长度
+  max_frame_length: 65535
