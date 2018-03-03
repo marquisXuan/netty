@@ -1,5 +1,7 @@
 package org.yyx.netty.server.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.yyx.netty.rpc.entity.User;
 import org.yyx.netty.rpc.service.DemoService;
@@ -12,9 +14,10 @@ import org.yyx.netty.rpc.service.DemoService;
  */
 @Service
 public class ImplDemoService implements DemoService {
+
     @Override
     public int sum(int numberA, int numberB) {
-        return numberA + numberA;
+        return numberA + numberB;
     }
 
     @Override

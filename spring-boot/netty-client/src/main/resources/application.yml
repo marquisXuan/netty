@@ -1,0 +1,5 @@
+netty:
+  port: 12345
+  basePackage: org.yyx.netty.rpc.service;
+  clientName: nettyClient
+  url: 127.0.0.1

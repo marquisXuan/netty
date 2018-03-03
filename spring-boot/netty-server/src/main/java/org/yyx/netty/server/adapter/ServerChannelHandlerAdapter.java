@@ -1,5 +1,6 @@
 package org.yyx.netty.server.adapter;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  * contact by tdg_yyx@foxmail.com
  */
 @Component
+@ChannelHandler.Sharable
 public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
     /**
      * ServerChannelHandlerAdapter 日志控制器
