@@ -33,10 +33,10 @@ public class ClientApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         LOGGER.info("\n----------------[rpc测试]----------------\n");
         int sum = demoService.sum(5, 8);
-        LOGGER.info("\n\n\n\n----------------[5+8的和为]----------------\n\n\n\n {}", sum);
+        LOGGER.info("\n\n----------------[5+8的和为]----------------\n {}\n", sum);
         String print = demoService.print();
-        LOGGER.info("\n\n\n\n----------------[服务器返回的消息是]----------------\n\n\n\n {}", print);
+        LOGGER.info("\n\n----------------[服务器返回的消息是]----------------\n {}\n", print);
         User userInfo = demoService.getUserInfo();
-        LOGGER.info("\n\n\n\n----------------[用户信息是]----------------\n\n\n\n {}", userInfo);
+        LOGGER.info("\n\n----------------[用户信息是]----------------\n {}\n", userInfo);
     }
 }

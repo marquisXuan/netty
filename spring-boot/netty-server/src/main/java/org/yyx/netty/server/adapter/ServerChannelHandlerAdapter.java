@@ -1,13 +1,13 @@
 package org.yyx.netty.server.adapter;
 
-import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.yyx.netty.server.dispatcher.RequestDispatcher;
 import org.yyx.netty.rpc.entity.MethodInvokeMeta;
+import org.yyx.netty.server.dispatcher.RequestDispatcher;
 
 import javax.annotation.Resource;
 
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * contact by tdg_yyx@foxmail.com
  */
 @Component
-@ChannelHandler.Sharable
+@Sharable
 public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
     /**
      * ServerChannelHandlerAdapter 日志控制器
