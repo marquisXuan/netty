@@ -12,8 +12,9 @@
 
 ### 使用说明：
 
-1. 当前资源库中含有两个项目，位于spring-boot目录下。IDE采用IDEA 2017.3.4
+1. 当前资源库中含有多个项目，位于spring-boot-netty目录下。IDE采用IDEA 2017.3.4
 2. 依次检出项目netty-server与netty-client。
 3. 先启动项目netty-server
 4. 再启动项目netty-client.控制台将打印出对应信息
+5. Study-netty项目是一个学习netty的相关例子与注释。整理了一下，不定期发布
 
