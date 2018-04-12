@@ -12,6 +12,40 @@
 
 ### 使用说明：
 
+##### DEMO使用：
+
+1. ###### 不考虑粘包/拆包问题的相关测试
+
+   1. 打开study-netty项目下study-server项目中的StudyServerApplicationTests类
+   2. 运行Junit测试startNettyServer1
+   3. 打开study-netty项目下study-client项目中的StudyClientApplicationTests类
+   4. 运行Junit测试startNettyClient1
+
+2. ###### 模拟粘包/拆包问题的相关测试
+
+   1. 打开study-netty项目下study-server项目中的StudyServerApplicationTests类
+   2. 运行Junit测试startNettyServer2
+   3. 打开study-netty项目下study-client项目中的StudyClientApplicationTests类
+   4. 运行Junit测试startNettyClient2
+
+3. ###### 解决粘包/拆包问题的相关测试LineBasedFrameDecoder实现
+
+   1. 打开study-netty项目下study-server项目中的StudyServerApplicationTests类
+   2. 运行Junit测试startNettyServer3
+   3. 打开study-netty项目下study-client项目中的StudyClientApplicationTests类
+   4. 运行Junit测试startNettyClient3
+
+4. ###### 解决粘包/拆包问题的相关测试DelimiterBasedFrameDecoder实现
+
+   1. 打开study-netty项目下study-server项目中的StudyServerApplicationTests类
+   2. 运行Junit测试startNettyServer4
+   3. 打开study-netty项目下study-client项目中的StudyClientApplicationTests类
+   4. 运行Junit测试startNettyClient4
+
+
+
+##### 项目使用：
+
 1. 当前资源库中含有多个项目，位于spring-boot-netty目录下。IDE采用IDEA 2017.3.4
 2. 依次检出项目netty-server与netty-client。
 3. 先启动项目netty-server
