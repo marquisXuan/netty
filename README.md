@@ -42,6 +42,12 @@
    3. 打开study-netty项目下study-client项目中的StudyClientApplicationTests类
    4. 运行Junit测试startNettyClient4
 
+5. ###### 解决粘包/拆包问题的相关测试FixedLengthFrameDecoder实现
+
+   1. 打开study-netty项目下study-server项目中的StudyServerApplicationTests类
+   2. 运行Junit测试startNettyServer5
+   3. 暂未写Client，可以使用telent进行测试，Client稍后提交
+
 
 
 ##### 项目使用：

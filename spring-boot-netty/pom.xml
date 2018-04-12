@@ -43,6 +43,21 @@
             <version>${netty}</version>
         </dependency>
         <!-- endregion -->
+        <!-- region lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+        </dependency>
+        <!-- endregion -->
+        
+        <!-- region messagePack -->
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+            <version>0.6.12</version>
+        </dependency>
+        <!-- endregion -->
     </dependencies>
     <build>
         <plugins>
