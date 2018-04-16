@@ -23,6 +23,7 @@ public class CodeCTest {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(CodeCTest.class);
 
+    // region jdk序列化与基于ByteBuffer的二进制序列化字节数对比
     @Test
     public void testCodeC() throws IOException {
         User user = new User();
@@ -38,9 +39,11 @@ public class CodeCTest {
         byteArrayOutputStream.close();
         LOGGER.info("--- [byte] {}", user.codeC().length);
     }
+    // endregion
 
+    // region jdk序列化效率与基于ByteBuffer的二进制序列化效率对比
     @Test
-    public void testCodec() throws Exception{
+    public void testCodec() throws Exception {
         User user = new User();
         user.setUserName("yyx");
         user.setUserGender(1);
@@ -67,5 +70,6 @@ public class CodeCTest {
         endTime = System.currentTimeMillis();
         LOGGER.info("--- [byte耗时] {}", endTime - startTime);
     }
+    // endregion
 
 }

@@ -45,6 +45,4 @@ public class StudyServerApplicationTests {
         new org.yyx.netty.study.echo.fixlength.EchoServer().bind(port);
     }
     // endregion
-
-
 }

@@ -45,4 +45,11 @@ public class StudyClientApplicationTests {
         new org.yyx.netty.study.echo.delimiter.EchoClient().connect(port, host);
     }
     // endregion
+
+    // region 启动已解决粘包/拆包问题的netty服务 - FixedLengthFrameDecoder 实现
+    @Test
+    public void startNettyServer5() throws Exception {
+        new org.yyx.netty.study.echo.fixlength.EchoClient().connect(port, host);
+    }
+    // endregion
 }

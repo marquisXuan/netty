@@ -1,4 +1,4 @@
-package org.yyx.netty.study.codec.msgpack;
+package org.yyx.netty.study.msgpack;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
