@@ -16,11 +16,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>../netty-server</module>
-        <module>../netty-client</module>
-    </modules>
-
     <build>
         <plugins>
             <plugin>

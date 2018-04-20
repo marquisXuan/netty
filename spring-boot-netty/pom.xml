@@ -28,6 +28,8 @@
         <module>netty-server</module>
         <module>netty-client</module>
         <module>study-netty</module>
+        <module>study-netty/study-server</module>
+        <module>study-netty/study-client</module>
     </modules>
 
     <dependencies>
