@@ -24,8 +24,13 @@
         <netty>5.0.0.Alpha2</netty>
     </properties>
 
-    <dependencies>
+    <modules>
+        <module>netty-server</module>
+        <module>netty-client</module>
+        <module>study-netty</module>
+    </modules>
 
+    <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
