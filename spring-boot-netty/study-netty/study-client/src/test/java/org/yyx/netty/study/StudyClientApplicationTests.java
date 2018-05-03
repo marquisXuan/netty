@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.yyx.netty.study.echo.megpack.MessagePackClient;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,6 +51,13 @@ public class StudyClientApplicationTests {
     @Test
     public void startNettyServer5() throws Exception {
         new org.yyx.netty.study.echo.fixlength.EchoClient().connect(port, host);
+    }
+    // endregion
+
+    // region 启动不考虑粘包/拆包问题 基于MessagePack编解码的Netty客户端
+    @Test
+    public void testMessagePackEchoClient() throws Exception {
+        new MessagePackClient().connect(port, host,20);
     }
     // endregion
 }

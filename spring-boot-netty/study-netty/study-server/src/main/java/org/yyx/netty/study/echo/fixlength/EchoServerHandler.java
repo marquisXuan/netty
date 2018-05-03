@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class EchoServerHandler extends ChannelHandlerAdapter {
 
     /**
-     * EchoServerHandler 日志控制器
+     * MessagePackServerHandler 日志控制器
      * Create by 叶云轩 at 2018/4/12 下午4:20
      * Concat at tdg_yyx@foxmail.com
      */

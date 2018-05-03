@@ -1,9 +1,11 @@
-package org.yyx.netty.study.msgpack;
+package org.yyx.netty.study.codec.msgpack;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import org.msgpack.MessagePack;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,7 +16,12 @@ import java.util.List;
  * contact by tdg_yyx@foxmail.com
  */
 public class MsgPackDecoder extends MessageToMessageDecoder<ByteBuf> {
-
+    /**
+     * MsgPackDecoder 日志控制器
+     * Create by 叶云轩 at 2018/5/3 下午3:19
+     * Concat at tdg_yyx@foxmail.com
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MsgPackDecoder.class);
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {

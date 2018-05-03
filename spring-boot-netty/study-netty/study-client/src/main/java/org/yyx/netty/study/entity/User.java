@@ -1,6 +1,7 @@
 package org.yyx.netty.study.entity;
 
 import lombok.Data;
+import org.msgpack.annotation.Message;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -11,6 +12,7 @@ import java.nio.ByteBuffer;
  * contact by tdg_yyx@foxmail.com
  */
 @Data
+@Message
 public class User implements Serializable {
     private static final long serialVersionUID = 7217658384280375192L;
 

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class EchoClientHandler extends ChannelHandlerAdapter {
     static final String ECHO_REQ = "Hi,Welcome to Netty World.$_$";
     /**
-     * EchoClientHandler 日志控制器
+     * MessagePackClientHandler 日志控制器
      * Create by 叶云轩 at 2018/4/12 下午4:57
      * Concat at tdg_yyx@foxmail.com
      */

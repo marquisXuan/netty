@@ -32,6 +32,7 @@ public class TimeServer {
      * 绑定端口
      *
      * @param port 端口号
+     *
      * @throws Exception 异常
      */
     public void bind(int port) throws Exception {

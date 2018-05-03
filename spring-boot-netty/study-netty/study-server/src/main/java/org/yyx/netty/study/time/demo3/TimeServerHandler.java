@@ -28,7 +28,7 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
     private int counter;
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         ctx.close();
     }
 
@@ -37,10 +37,11 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
      *
      * @param ctx ChannelHandlerContext
      * @param msg 消息
+     *
      * @throws Exception
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         // region 解决模拟粘包/拆包问题相关代码
         String body = (String) msg;
         LOGGER.info("--- [接收到的数据] {} | [counter] {}", body, ++counter);

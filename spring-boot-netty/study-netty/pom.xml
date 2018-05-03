@@ -10,6 +10,11 @@
     <name>study-netty</name>
     <description>study netty</description>
 
+    <modules>
+        <module>study-server</module>
+        <module>study-client</module>
+    </modules>
+
     <parent>
         <groupId>org.yyx.netty</groupId>
         <artifactId>spring-boot-netty</artifactId>

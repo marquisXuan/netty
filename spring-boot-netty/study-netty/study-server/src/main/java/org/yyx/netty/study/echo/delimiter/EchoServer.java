@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EchoServer {
     /**
-     * EchoServer 日志控制器
+     * MessagePackServer 日志控制器
      * Create by 叶云轩 at 2018/4/12 下午4:09
      * Concat at tdg_yyx@foxmail.com
      */

@@ -1,4 +1,4 @@
-package org.yyx.netty.study.echo.fixlength;
+package org.yyx.netty.study.echo.megpack;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,12 +8,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yyx.netty.study.codec.msgpack.MsgPackDecoder;
+import org.yyx.netty.study.codec.msgpack.MsgPackEncoder;
 
 /**
  * EchoServer服务端
@@ -21,13 +21,13 @@ import org.slf4j.LoggerFactory;
  * create by 叶云轩 at 2018/4/12-下午4:07
  * contact by tdg_yyx@foxmail.com
  */
-public class EchoServer {
+public class MessagePackServer {
     /**
      * MessagePackServer 日志控制器
      * Create by 叶云轩 at 2018/4/12 下午4:09
      * Concat at tdg_yyx@foxmail.com
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(EchoServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagePackServer.class);
 
 
     public void bind(int port) throws Exception {
@@ -44,13 +44,15 @@ public class EchoServer {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 100)
-                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new FixedLengthFrameDecoder(20));
-                            ch.pipeline().addLast(new StringDecoder());
-                            ch.pipeline().addLast(new EchoServerHandler());
+                            ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
+//                            ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2));
+                            ch.pipeline().addLast(new MsgPackDecoder());
+//                            ch.pipeline().addLast(new LengthFieldPrepender(2));
+                            ch.pipeline().addLast(new MsgPackEncoder());
+                            ch.pipeline().addLast(new MessagePackServerHandler());
                         }
                     });
             ChannelFuture future = bootstrap.bind(port).sync();

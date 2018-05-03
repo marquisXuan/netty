@@ -15,7 +15,7 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
- * EchoClient
+ * MessagePackClient
  * <p>
  * create by 叶云轩 at 2018/4/12-下午4:28
  * contact by tdg_yyx@foxmail.com
