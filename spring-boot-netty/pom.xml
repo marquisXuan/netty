@@ -30,14 +30,6 @@
         <netty>5.0.0.Alpha2</netty>
     </properties>
 
-    <modules>
-        <module>netty-server</module>
-        <module>netty-client</module>
-        <module>study-netty</module>
-        <module>study-netty/study-server</module>
-        <module>study-netty/study-client</module>
-    </modules>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
