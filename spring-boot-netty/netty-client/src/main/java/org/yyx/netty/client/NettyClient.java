@@ -49,6 +49,9 @@ public class NettyClient {
             ChannelFuture sync = bootstrap.connect(url, port).sync();
             sync.channel().closeFuture().sync();
             Object response = customChannelInitializer.getResponse();
+            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
+                    "\t├ [reponse]: {}\n" +
+                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", response);
             return response;
         } catch (InterruptedException e) {
             retry++;

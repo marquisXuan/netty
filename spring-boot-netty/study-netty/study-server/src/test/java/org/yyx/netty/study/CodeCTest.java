@@ -1,6 +1,7 @@
 package org.yyx.netty.study;
 
 import org.junit.Test;
+import org.msgpack.MessagePack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yyx.netty.study.entity.User;
@@ -38,6 +39,11 @@ public class CodeCTest {
         LOGGER.info("--- [JDK] {}", bytes.length);
         byteArrayOutputStream.close();
         LOGGER.info("--- [byte] {}", user.codeC().length);
+
+        MessagePack messagePack = new MessagePack();
+        // 序列化
+        byte[] write = messagePack.write(user);
+        LOGGER.info("--- [MessagePack] {}", write.length);
     }
     // endregion
 
@@ -48,8 +54,8 @@ public class CodeCTest {
         user.setUserName("yyx");
         user.setUserGender(1);
         int loop = 1000000;
-        ByteArrayOutputStream bos = null;
-        ObjectOutputStream os = null;
+        ByteArrayOutputStream bos;
+        ObjectOutputStream os;
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < loop; i++) {
             bos = new ByteArrayOutputStream();
@@ -61,14 +67,24 @@ public class CodeCTest {
             bos.close();
         }
         long endTime = System.currentTimeMillis();
-        LOGGER.info("--- [jdk耗时] {}", endTime - startTime);
+        LOGGER.info("--- [jdk耗时] {}", endTime - startTime + "ms");
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         startTime = System.currentTimeMillis();
         for (int i = 0; i < loop; i++) {
             byte[] bytes = user.codeC(buffer);
         }
         endTime = System.currentTimeMillis();
-        LOGGER.info("--- [byte耗时] {}", endTime - startTime);
+        LOGGER.info("--- [byte耗时] {}", endTime - startTime + "ms");
+        startTime = System.currentTimeMillis();
+        MessagePack messagePack = new MessagePack();
+        for (int i = 0; i < loop; i++) {
+            // 序列化
+            byte[] write = messagePack.write(user);
+        }
+        endTime = System.currentTimeMillis();
+        LOGGER.info("--- [MessagePack 耗时] {}", endTime - startTime + "ms");
+
+
     }
     // endregion
 
