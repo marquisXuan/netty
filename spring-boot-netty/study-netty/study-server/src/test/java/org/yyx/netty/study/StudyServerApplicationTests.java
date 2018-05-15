@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.yyx.netty.study.echo.megpack.MessagePackServer;
+import org.yyx.netty.study.websocket.WebSocketServer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,6 +52,13 @@ public class StudyServerApplicationTests {
     @Test
     public void testMessagePackEchoServer() throws Exception {
         new MessagePackServer().bind(port);
+    }
+    // endregion
+
+    // region 启动WebSocket服务器
+    @Test
+    public void startWebSocketServer() throws Exception {
+        new WebSocketServer().run(9999);
     }
     // endregion
 }
