@@ -1,9 +1,12 @@
 package org.yyx.netty.study.websocket;
 
+import com.alibaba.fastjson.JSONObject;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
@@ -11,9 +14,13 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
+import org.msgpack.MessagePack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -54,12 +61,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
                         "\t├ [建立连接]: client [{}]\n" +
                         "\t├ [当前在线人数]: {}\n" +
                         "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", channelHandlerContext.channel().remoteAddress()
-                , WebSocketUsers.getUSERS().size());
-        for (String s : WebSocketUsers.getUSERS().keySet()) {
-            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
-                    "\t├ [当前在线]: {}\n" +
-                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", s);
-        }
+                , WebSocketUsers.getUSERS().size() + 1);
     }
 
     /**
@@ -75,11 +77,12 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
                 "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", channel.remoteAddress());
         WebSocketUsers.remove(channel);
         ConcurrentMap<String, Channel> users = WebSocketUsers.getUSERS();
+        LOGGER.info("\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓");
         for (String s : users.keySet()) {
-            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
-                    "\t├ [当前在线]: {}\n" +
-                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", s);
+            LOGGER.info(
+                    "\t├ [当前在线]: {}", s);
         }
+        LOGGER.info("\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓");
     }
 
     /**
@@ -100,10 +103,13 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
      */
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+        LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
+                "\t├ [收到客户端消息类型]: {} - {}\n" +
+                "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", msg.getClass(), msg.toString());
         // 传统http接入 第一次需要使用http建立握手
         if (msg instanceof FullHttpRequest) {
             handlerHttpRequest(ctx, (FullHttpRequest) msg);
-            ctx.channel().write(new TextWebSocketFrame("与服务器连接成功"));
+            ctx.channel().write(new TextWebSocketFrame("连接成功"));
         }
         // WebSocket接入
         else if (msg instanceof WebSocketFrame) {
@@ -143,9 +149,9 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
      * @param channelHandlerContext channelHandlerContext
      * @param frame                 webSocketFrame
      */
-    private void handlerWebSocketFrame(ChannelHandlerContext channelHandlerContext, WebSocketFrame frame) {
+    private void handlerWebSocketFrame(ChannelHandlerContext channelHandlerContext, WebSocketFrame frame) throws IOException {
         Channel channel = channelHandlerContext.channel();
-        // 判断是否是关闭链路的指令
+        // region 判断是否是关闭链路的指令
         if (frame instanceof CloseWebSocketFrame) {
             LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
                     "\t├ [关闭与客户端的链接]\n" +
@@ -153,10 +159,40 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             socketServerHandShaker.close(channel, (CloseWebSocketFrame) frame.retain());
             return;
         }
-        // 判断是否是ping消息
+        // endregion
+        // region 判断是否是ping消息
         if (frame instanceof PingWebSocketFrame) {
+            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
+                    "\t├ [Ping消息]\n" +
+                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓");
             channel.write(new PongWebSocketFrame(frame.content().retain()));
             return;
+        }
+        // endregion
+        if (frame instanceof TextWebSocketFrame) {
+            String text = ((TextWebSocketFrame) frame).text();
+            WebSocketMessage webSocketMessage = JSONObject.parseObject(text, WebSocketMessage.class);
+            String accept = webSocketMessage.getAccept();
+            WebSocketUsers.sendMessageToUser(accept, webSocketMessage.getContent());
+        }
+        if (frame instanceof BinaryWebSocketFrame) {
+            BinaryWebSocketFrame binaryWebSocketFrame = (BinaryWebSocketFrame) frame;
+            ByteBuf content = binaryWebSocketFrame.content();
+            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
+                    "\t├ [二进制数据]:{}\n" +
+                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", content);
+            final int length = content.readableBytes();
+            final byte[] array = new byte[length];
+            content.getBytes(content.readerIndex(), array, 0, length);
+            MessagePack messagePack = new MessagePack();
+            List<Object> list = new ArrayList<>();
+            list.add(messagePack.read(array));
+            for (Object o : list) {
+                LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
+                        "\t├ [解码数据]: {}\n" +
+                        "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", o);
+            }
+
         }
         // 非文本消息处理方式
         if (!(frame instanceof TextWebSocketFrame)) {
@@ -164,15 +200,5 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
                     "%s 暂不支持非文本消息", frame.getClass().getName()
             ));
         }
-        // 返回数据
-        String request = ((TextWebSocketFrame) frame).text();
-
-        LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
-                "\t├ [服务器接收数据]: {}\n" +
-                "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", request);
-        channel.write(new TextWebSocketFrame(request + "登陆成功"));
-        WebSocketUsers.sendMessageToUsers("aaaaaaa");
     }
-
-
 }

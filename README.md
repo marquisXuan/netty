@@ -12,7 +12,7 @@
 
 ### 使用说明：
 
-### Netty + WebSocket服务
+### Netty + WebSocket - Server端
 
 此次更新主要添加了一个基于netty的websocket服务，可以做到群发消息，也可以做到点对点发送消息。代码在**stude-netty/study-server/src/main/java/org/yyx/netty/study/websocket**这里只给出了服务器代码，客户端代码采用的是**Chrome浏览器上的Simple Web Socket Client插件，省去了自己写页面的麻烦**。
 
@@ -36,7 +36,17 @@
 
 用户名字段必须添加，否则会直接关闭连接，因为服务器没有做异常处理，这点根据个人需要进行修改。
 
+### Netty + WebSocket - Client端
 
+此次更新主要添加了一个基于Netty的WebSocket客户端。可以点对点发送消息，可以群发。已经过测试。开启Server端，启动Client的测试1，再启动Client的测试2.便可以测试2给测试1发送消息了。**当然中间要注释一些代码**，即，启动测试1时注释(**WebSocketClientHandler类128-133行**)，启动测试2时，打开。
+
+Client一般为浏览器，所以也就不多说什么了。这个Client端没有自定义协议，使用了FastJson进行序列化。以后有时间了再把项目代码扔出来。这个作为Demo已经够用啦。
+
+### Server端改进
+
+Server端已添加MessagePack解码二进制数据支持。自己写的Client走这个。使用ByteBuf
+
+浏览器客户端走TextWebSocketFrame.没有做过多的业务逻辑。
 
 ##### DEMO使用：
 
@@ -83,4 +93,12 @@
 3. 先启动项目netty-server
 4. 再启动项目netty-client.控制台将打印出对应信息
 5. Study-netty项目是一个学习netty的相关例子与注释。整理了一下，不定期发布
+
+##随意随意
+
+![随意随意](https://images2018.cnblogs.com/blog/1161505/201805/1161505-20180518152803876-1352531490.jpg)
+
+#### 作者QQ: 562638362
+
+#### 作者邮箱：tdg_yyx@foxmail.com
 

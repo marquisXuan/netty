@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.yyx.netty.study.echo.megpack.MessagePackClient;
+import org.yyx.netty.study.websocket.WebSocketClient;
+import org.yyx.netty.study.websocket.WebSocketUsers;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,7 +59,19 @@ public class StudyClientApplicationTests {
     // region 启动不考虑粘包/拆包问题 基于MessagePack编解码的Netty客户端
     @Test
     public void testMessagePackEchoClient() throws Exception {
-        new MessagePackClient().connect(port, host,20);
+        new MessagePackClient().connect(port, host, 20);
+    }
+    // endregion
+
+    // region 启动WebSocketClient
+    @Test
+    public void startWebSocketClient() throws Exception {
+        new WebSocketClient().connect(9999, host, "yyx");
+    }
+
+    @Test
+    public void startWebSocketClient2() throws Exception {
+        new WebSocketClient().connect(9999, host, "YeYunXuan");
     }
     // endregion
 }

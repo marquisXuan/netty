@@ -71,6 +71,13 @@
             <version>0.6.12</version>
         </dependency>
         <!-- endregion -->
+        <!-- region fast-json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+        <!-- endregion -->
     </dependencies>
     <build>
         <plugins>
