@@ -96,7 +96,7 @@ Server端已添加MessagePack解码二进制数据支持。自己写的Client走
 
 ##随意随意
 
-![随意随意](https://images2018.cnblogs.com/blog/1161505/201805/1161505-20180518152803876-1352531490.jpg)
+![随意随意](http://app.hartedu.com/file/cant_delete.jpg)
 
 #### 作者QQ: 562638362
 
