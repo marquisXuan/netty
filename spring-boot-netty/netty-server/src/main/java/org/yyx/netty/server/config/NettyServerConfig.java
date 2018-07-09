@@ -6,8 +6,9 @@ import org.springframework.stereotype.Component;
 /**
  * Netty服务器配置信息
  * <p>
- * create by 叶云轩 at 2018/3/3-下午12:14
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/7/9 - 上午9:39
  */
 @Component
 @ConfigurationProperties(prefix = "netty")

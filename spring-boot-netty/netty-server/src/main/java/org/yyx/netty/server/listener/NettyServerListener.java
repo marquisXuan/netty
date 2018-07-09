@@ -75,7 +75,6 @@ public class NettyServerListener {
     /**
      * 开启及服务线程
      */
-//    @PostConstruct
     public void start() {
         // 从配置文件中(application.yml)获取服务端监听端口号
         int port = nettyConfig.getPort();
@@ -93,7 +92,6 @@ public class NettyServerListener {
                             , 0, 2, 0, 2));
                     pipeline.addLast(new LengthFieldPrepender(2));
                     pipeline.addLast(new ObjectCodec());
-
                     pipeline.addLast(channelHandlerAdapter);
                 }
             });

@@ -31,6 +31,7 @@ public class NettyBeanScanner implements BeanFactoryPostProcessor {
     /**
      * 注册Bean到Spring的bean工厂
      */
+    @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         this.beanFactory = (DefaultListableBeanFactory) beanFactory;
         // 加载远程服务的接口

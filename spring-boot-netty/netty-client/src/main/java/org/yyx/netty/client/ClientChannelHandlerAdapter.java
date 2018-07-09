@@ -10,6 +10,8 @@ import org.yyx.netty.rpc.entity.MethodInvokeMeta;
  * <p>
  * create by 叶云轩 at 2018/3/3-下午2:08
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩
  */
 public class ClientChannelHandlerAdapter extends ChannelHandlerAdapter {
     private Logger logger = LoggerFactory.getLogger(ClientChannelHandlerAdapter.class);
@@ -22,22 +24,24 @@ public class ClientChannelHandlerAdapter extends ChannelHandlerAdapter {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         logger.info("客户端出异常了,异常信息:{}", cause.getMessage());
         cause.printStackTrace();
         ctx.close();
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        if (methodInvokeMeta.getMethodName().endsWith("toString") && !"class java.lang.String".equals(methodInvokeMeta.getReturnType().toString()))
+    public void channelActive(ChannelHandlerContext ctx) {
+        if (methodInvokeMeta.getMethodName().endsWith("toString")
+                && !"class java.lang.String".equals(methodInvokeMeta.getReturnType().toString())) {
             logger.info("客户端发送信息参数:{},信息返回值类型：{}", methodInvokeMeta.getArgs(), methodInvokeMeta.getReturnType());
+        }
         ctx.writeAndFlush(methodInvokeMeta);
 
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         channelInitializerClient.setResponse(msg);
     }
 }

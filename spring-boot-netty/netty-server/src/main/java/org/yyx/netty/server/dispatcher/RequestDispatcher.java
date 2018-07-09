@@ -15,8 +15,9 @@ import java.lang.reflect.Method;
 /**
  * 请求分排器
  * <p>
- * create by 叶云轩 at 2018/3/3-下午1:31
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/7/9 - 上午9:37
  */
 @Component
 public class RequestDispatcher implements ApplicationContextAware {
@@ -33,10 +34,10 @@ public class RequestDispatcher implements ApplicationContextAware {
     /**
      * 发送
      *
-     * @param ctx
-     * @param invokeMeta
+     * @param channelHandlerContext channelHandlerContext
+     * @param invokeMeta            invokeMeta
      */
-    public void dispatcher(final ChannelHandlerContext ctx, final MethodInvokeMeta invokeMeta) {
+    public void dispatcher(final ChannelHandlerContext channelHandlerContext, final MethodInvokeMeta invokeMeta) {
         ChannelFuture f = null;
         try {
             Class<?> interfaceClass = invokeMeta.getInterfaceClass();
@@ -47,15 +48,17 @@ public class RequestDispatcher implements ApplicationContextAware {
             Method method = targetObject.getClass().getMethod(name, parameterTypes);
             Object obj = method.invoke(targetObject, args);
             if (obj == null) {
-                f = ctx.writeAndFlush(NullWritable.nullWritable());
+                f = channelHandlerContext.writeAndFlush(NullWritable.nullWritable());
             } else {
-                f = ctx.writeAndFlush(obj);
+                f = channelHandlerContext.writeAndFlush(obj);
             }
             f.addListener(ChannelFutureListener.CLOSE);
         } catch (Exception e) {
-            f = ctx.writeAndFlush(e.getMessage());
+            f = channelHandlerContext.writeAndFlush(e.getMessage());
         } finally {
-            f.addListener(ChannelFutureListener.CLOSE);
+            if (f != null) {
+                f.addListener(ChannelFutureListener.CLOSE);
+            }
         }
     }
 }

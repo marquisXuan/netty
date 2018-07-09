@@ -9,8 +9,9 @@ import org.yyx.netty.rpc.util.NettyBeanScanner;
 /**
  * Netty初始化
  * <p>
- * create by 叶云轩 at 2017/11/20 - 13:49
- * contact by ycountjavaxuan@outlook.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/7/9 - 上午9:32
  */
 @Configuration
 public class NettyConfiguration {

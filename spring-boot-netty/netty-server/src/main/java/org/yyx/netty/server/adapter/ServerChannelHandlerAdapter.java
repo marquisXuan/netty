@@ -14,8 +14,9 @@ import javax.annotation.Resource;
 /**
  * NettyServer通道适配器
  * <p>
- * create by 叶云轩 at 2018/3/3-下午12:27
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/7/9 - 上午9:39
  */
 @Component
 @Sharable
@@ -43,9 +44,10 @@ public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
         MethodInvokeMeta invokeMeta = (MethodInvokeMeta) msg;
         // 屏蔽toString()方法
         if (invokeMeta.getMethodName().endsWith("toString()")
-                && !"class java.lang.String".equals(invokeMeta.getReturnType().toString()))
+                && !"class java.lang.String".equals(invokeMeta.getReturnType().toString())) {
             LOGGER.info("客户端传入参数 :{},返回值：{}",
                     invokeMeta.getArgs(), invokeMeta.getReturnType());
+        }
         dispatcher.dispatcher(ctx, invokeMeta);
     }
 }

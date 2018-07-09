@@ -1,8 +1,8 @@
-# Netty
+# spring boot netty
 
-> 有朋友看了博文想要一下源码，为此就整合了一下，现发布在这里.
+> 此资源库中包含了博文的源码以及一些简易的DEMO，所有的Demo均在study-netty下。
 >
-> 当前项目对应的博文地址为：
+> 对应的博文地址为：
 >
 > [开源中国](https://my.oschina.net/yzwjyw/blog/1614889)
 >

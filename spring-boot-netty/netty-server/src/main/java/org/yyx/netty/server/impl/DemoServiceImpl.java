@@ -1,7 +1,5 @@
 package org.yyx.netty.server.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.yyx.netty.rpc.entity.User;
 import org.yyx.netty.rpc.service.DemoService;
@@ -9,11 +7,12 @@ import org.yyx.netty.rpc.service.DemoService;
 /**
  * 测试Service实现类
  * <p>
- * create by 叶云轩 at 2018/3/3-下午1:50
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/7/9 - 上午9:36
  */
 @Service
-public class ImplDemoService implements DemoService {
+public class DemoServiceImpl implements DemoService {
 
     @Override
     public int sum(int numberA, int numberB) {
