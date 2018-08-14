@@ -8,7 +8,9 @@
     <packaging>jar</packaging>
 
     <name>netty-server</name>
-    <description>netty-server with spring boot</description>
+    <description>
+        基于SpringBoot的Netty服务端整合代码
+    </description>
 
     <parent>
         <groupId>org.yyx.netty</groupId>
@@ -24,7 +26,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
     <!-- endregion -->
 
@@ -37,6 +38,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

@@ -9,7 +9,12 @@
     <packaging>pom</packaging>
 
     <name>spring-boot-netty</name>
-    <description>study netty</description>
+    <description>
+        Netty 学习之路
+        netty-server是基于Netty开发的一款Server端代码
+        netty-client是基于Netty开发的一款Client端代码
+        study-netty是学习Netty的相关Demo，记录了从0到1的整合过程等
+    </description>
 
     <modules>
         <module>netty-server</module>
@@ -28,13 +33,19 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <netty>5.0.0.Alpha2</netty>
+        <lombok>1.16.20</lombok>
+        <msgpack>0.6.12</msgpack>
+        <fastjson>1.2.47</fastjson>
+        <jboss.marshalling>2.0.5.Final</jboss.marshalling>
     </properties>
 
     <dependencies>
+        <!-- region spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!-- endregion -->
         <!-- region test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,7 +64,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
+            <version>${lombok}</version>
         </dependency>
         <!-- endregion -->
         <!-- region jboss-marshalling -->
@@ -61,24 +72,25 @@
         <dependency>
             <groupId>org.jboss.marshalling</groupId>
             <artifactId>jboss-marshalling</artifactId>
-            <version>2.0.5.Final</version>
+            <version>${jboss.marshalling}l</version>
         </dependency>
         <!-- endregion -->
         <!-- region messagePack -->
         <dependency>
             <groupId>org.msgpack</groupId>
             <artifactId>msgpack</artifactId>
-            <version>0.6.12</version>
+            <version>${msgpack}</version>
         </dependency>
         <!-- endregion -->
         <!-- region fast-json -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>${fastjson}</version>
         </dependency>
         <!-- endregion -->
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -87,6 +99,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
