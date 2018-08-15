@@ -3,7 +3,7 @@ package org.yyx.netty.rpc.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.MethodInvokeMeta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,6 +12,9 @@ import java.lang.reflect.Method;
  * <p>
  * create by 叶云轩 at 2018/3/3-下午2:14
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:28
  */
 public class RemoteMethodInvokeUtil implements ApplicationContextAware {
 

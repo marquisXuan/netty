@@ -3,7 +3,7 @@ package org.yyx.netty.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.MethodInvokeMeta;
 import org.yyx.netty.rpc.util.WrapMethodUtils;
 
 import java.lang.reflect.InvocationHandler;

@@ -4,7 +4,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.MethodInvokeMeta;
 
 /**
  * <p>

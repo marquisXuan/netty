@@ -7,8 +7,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
-import org.yyx.netty.rpc.entity.NullWritable;
+import org.yyx.netty.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.NullWritable;
 
 import java.lang.reflect.Method;
 

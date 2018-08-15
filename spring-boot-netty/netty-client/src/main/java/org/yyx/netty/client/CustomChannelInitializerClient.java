@@ -7,14 +7,17 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
-import org.yyx.netty.rpc.entity.NullWritable;
-import org.yyx.netty.rpc.util.ObjectCodec;
+import org.yyx.netty.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.NullWritable;
+import org.yyx.netty.util.ObjectCodec;
 
 /**
  * <p>
  * create by 叶云轩 at 2018/3/3-下午2:09
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:30
  */
 public class CustomChannelInitializerClient extends ChannelInitializer<SocketChannel> {
 

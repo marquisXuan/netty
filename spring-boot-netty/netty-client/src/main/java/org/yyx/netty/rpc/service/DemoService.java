@@ -1,12 +1,15 @@
 package org.yyx.netty.rpc.service;
 
-import org.yyx.netty.rpc.entity.User;
+import org.yyx.netty.entity.User;
 
 /**
  * 测试Service
  * <p>
  * create by 叶云轩 at 2018/3/3-下午1:46
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:29
  */
 public interface DemoService {
 

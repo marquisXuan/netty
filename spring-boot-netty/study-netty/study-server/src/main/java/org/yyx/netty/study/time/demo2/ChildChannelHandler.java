@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * create by 叶云轩 at 2018/4/11-下午6:34
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:38
  */
 public class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
 

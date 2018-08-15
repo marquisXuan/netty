@@ -5,11 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.yyx.netty.rpc.entity.User;
+import org.yyx.netty.entity.User;
 import org.yyx.netty.rpc.service.DemoService;
 
 import javax.annotation.Resource;
 
+/**
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:29
+ */
 @SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
 

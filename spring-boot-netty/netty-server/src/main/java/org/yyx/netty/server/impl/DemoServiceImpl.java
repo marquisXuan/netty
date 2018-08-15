@@ -1,7 +1,7 @@
 package org.yyx.netty.server.impl;
 
 import org.springframework.stereotype.Service;
-import org.yyx.netty.rpc.entity.User;
+import org.yyx.netty.entity.User;
 import org.yyx.netty.rpc.service.DemoService;
 
 /**

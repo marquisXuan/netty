@@ -7,13 +7,16 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.rpc.entity.MethodInvokeMeta;
+import org.yyx.netty.entity.MethodInvokeMeta;
 
 /**
  * NettyClient
  * <p>
  * create by 叶云轩 at 2018/3/3-下午2:07
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:30
  */
 public class NettyClient {
     /**

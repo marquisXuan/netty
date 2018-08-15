@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.msgpack.MessagePack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.study.entity.User;
+import org.yyx.netty.entity.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +15,9 @@ import java.nio.ByteBuffer;
  * <p>
  * create by 叶云轩 at 2018/4/12-下午6:50
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:34
  */
 public class CodeCTest {
     /**
@@ -28,8 +31,8 @@ public class CodeCTest {
     @Test
     public void testCodeC() throws IOException {
         User user = new User();
-        user.setUserName("yyx");
-        user.setUserGender(1);
+        user.setName("yyx");
+        user.setId(1);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(user);
@@ -51,8 +54,8 @@ public class CodeCTest {
     @Test
     public void testCodec() throws Exception {
         User user = new User();
-        user.setUserName("yyx");
-        user.setUserGender(1);
+        user.setName("yyx");
+        user.setId(1);
         int loop = 1000000;
         ByteArrayOutputStream bos;
         ObjectOutputStream os;

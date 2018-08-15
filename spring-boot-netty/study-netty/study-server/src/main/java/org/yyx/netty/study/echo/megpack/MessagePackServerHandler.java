@@ -4,15 +4,17 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.study.entity.User;
+import org.yyx.netty.entity.User;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * <p>
  * create by 叶云轩 at 2018/4/12-下午4:12
  * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by tdg_yyx@foxmail.com
+ * @date 2018/8/15 - 12:32
  */
 public class MessagePackServerHandler extends ChannelHandlerAdapter {
 

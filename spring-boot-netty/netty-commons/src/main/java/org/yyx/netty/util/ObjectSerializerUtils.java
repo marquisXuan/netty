@@ -1,4 +1,4 @@
-package org.yyx.netty.rpc.util;
+package org.yyx.netty.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

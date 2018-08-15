@@ -1,6 +1,7 @@
 package org.yyx.netty.rpc.service;
 
-import org.yyx.netty.rpc.entity.User;
+
+import org.yyx.netty.entity.User;
 
 /**
  * 测试Service
