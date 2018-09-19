@@ -94,10 +94,6 @@ Server端已添加MessagePack解码二进制数据支持。自己写的Client走
 4. 再启动项目netty-client.控制台将打印出对应信息
 5. Study-netty项目是一个学习netty的相关例子与注释。整理了一下，不定期发布
 
-##随意随意
-
-![随意随意](http://app.hartedu.com/file/cant_delete.jpg)
-
 #### 作者QQ: 562638362
 
 #### 作者邮箱：tdg_yyx@foxmail.com
