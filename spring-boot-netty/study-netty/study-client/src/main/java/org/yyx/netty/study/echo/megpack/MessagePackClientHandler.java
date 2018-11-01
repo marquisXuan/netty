@@ -4,7 +4,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yyx.netty.study.entity.User;
+import org.yyx.netty.entity.User;
 
 /**
  * <p>
@@ -34,7 +34,6 @@ public class MessagePackClientHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-
         User[] userInfo = UserInfo();
         ctx.writeAndFlush(userInfo);
         for (User info : userInfo) {
@@ -58,8 +57,8 @@ public class MessagePackClientHandler extends ChannelHandlerAdapter {
         User user;
         for (int i = 0; i < sendNumber; i++) {
             user = new User();
-            user.setUserGender(i);
-            user.setUserName("YYX --->" + i);
+            user.setId(i);
+            user.setName("YYX --->" + i);
             users[i] = user;
         }
         return users;

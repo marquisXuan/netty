@@ -35,12 +35,21 @@ public class ClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        LOGGER.info("\n----------------[rpc测试]----------------\n");
+        LOGGER.info("{} -> [rpc测试] ", this.getClass().getName());
         int sum = demoService.sum(5, 8);
-        LOGGER.info("\n\n----------------[5+8的和为]----------------\n {}\n", sum);
+        LOGGER.info("{} -> [rpc测试结果] {}", this.getClass().getName(), sum);
+        LOGGER.info("{} -> [字符串测试] ", this.getClass().getName());
         String print = demoService.print();
-        LOGGER.info("\n\n----------------[服务器返回的消息是]----------------\n {}\n", print);
+        LOGGER.info("{} -> [字符串测试结果] {}", this.getClass().getName(), print);
+        LOGGER.info("{} -> [对象测试] ", this.getClass().getName());
         User userInfo = demoService.getUserInfo();
-        LOGGER.info("\n\n----------------[用户信息是]----------------\n {}\n", userInfo);
+        LOGGER.info("{} -> [对象测试结果] {}", this.getClass().getName(), userInfo);
+        LOGGER.info("{} -> [异常测试]", this.getClass().getName());
+        try {
+            double division = demoService.division(3, 0);
+            LOGGER.info("{} -> [异常测试结果] {}", this.getClass().getName(), division);
+        } catch (Exception e) {
+            LOGGER.error("{} -> [服务器异常] {}", this.getClass().getName(), e.getMessage());
+        }
     }
 }

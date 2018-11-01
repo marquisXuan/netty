@@ -17,13 +17,13 @@ import org.yyx.netty.rpc.util.NettyBeanScanner;
 public class NettyConfiguration {
 
     @Bean
-    public NettyBeanScanner initNettyBeanScanner(@Value("${netty.basePackage}") String basePackage,
+    public static NettyBeanScanner initNettyBeanScanner(@Value("${netty.basePackage}") String basePackage,
                                                  @Value("${netty.clientName}") String clientName) {
         return new NettyBeanScanner(basePackage, clientName);
     }
 
     @Bean("nettyClient")
-    public NettyClient initNettyClient(@Value("${netty.url}") String url, @Value("${netty.port}") int port) {
+    public static NettyClient initNettyClient(@Value("${netty.url}") String url, @Value("${netty.port}") int port) {
         return new NettyClient(url, port);
     }
 }

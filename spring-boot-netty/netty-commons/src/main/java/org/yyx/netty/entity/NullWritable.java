@@ -7,8 +7,6 @@ import java.io.Serializable;
 /**
  * 服务器可能返回空的处理
  * <p>
- * create by 叶云轩 at 2018/3/3-下午1:39
- * contact by tdg_yyx@foxmail.com
  *
  * @author 叶云轩 contact by tdg_yyx@foxmail.com
  * @date 2018/8/15 - 11:57
@@ -30,6 +28,11 @@ public class NullWritable implements Serializable {
     private NullWritable() {
     }
 
+    /**
+     * 返回代表Null的对象
+     *
+     * @return {@link NullWritable} 当方法返回值为void时或返回值为null时返回此对象
+     */
     public static NullWritable nullWritable() {
         return instance;
     }

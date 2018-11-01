@@ -13,8 +13,6 @@ import org.yyx.netty.util.ObjectCodec;
 
 /**
  * <p>
- * create by 叶云轩 at 2018/3/3-下午2:09
- * contact by tdg_yyx@foxmail.com
  *
  * @author 叶云轩 contact by tdg_yyx@foxmail.com
  * @date 2018/8/15 - 12:30
@@ -28,19 +26,22 @@ public class CustomChannelInitializerClient extends ChannelInitializer<SocketCha
     private Object response;
 
     public CustomChannelInitializerClient(MethodInvokeMeta methodInvokeMeta) {
-        if (!"toString".equals(methodInvokeMeta.getMethodName())) {
-            logger.info("[CustomChannelInitializerClient] 调用方法名：{}，入参：{},参数类型：{}，返回值类型{}"
-                    , methodInvokeMeta.getMethodName()
-                    , methodInvokeMeta.getArgs()
-                    , methodInvokeMeta.getParameterTypes()
-                    , methodInvokeMeta.getReturnType());
-        }
+        logger.info("[CustomChannelInitializerClient] 调用方法名：{}，入参：{},参数类型：{}，返回值类型{}"
+                , methodInvokeMeta.getMethodName()
+                , methodInvokeMeta.getArgs()
+                , methodInvokeMeta.getParameterTypes()
+                , methodInvokeMeta.getReturnType());
         this.methodInvokeMeta = methodInvokeMeta;
     }
 
-    public Object getResponse() {
+    public Object getResponse() throws Exception {
         if (response instanceof NullWritable) {
+            // 空值返回
             return null;
+        } else if (response instanceof Exception) {
+            // 异常类
+            Exception exception = (Exception) response;
+            throw exception;
         }
         return response;
     }

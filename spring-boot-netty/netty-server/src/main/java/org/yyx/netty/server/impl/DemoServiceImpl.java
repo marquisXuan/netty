@@ -2,6 +2,7 @@ package org.yyx.netty.server.impl;
 
 import org.springframework.stereotype.Service;
 import org.yyx.netty.entity.User;
+import org.yyx.netty.exception.ErrorParamsException;
 import org.yyx.netty.rpc.service.DemoService;
 
 /**
@@ -15,13 +16,11 @@ import org.yyx.netty.rpc.service.DemoService;
 public class DemoServiceImpl implements DemoService {
 
     @Override
-    public int sum(int numberA, int numberB) {
-        return numberA + numberB;
-    }
-
-    @Override
-    public String print() {
-        return "这是来自服务器中DemoService接口的print方法打印的消息";
+    public double division(int numberA, int numberB) throws ErrorParamsException {
+        if (numberB == 0) {
+            throw new ErrorParamsException("除数不能为0");
+        }
+        return numberA / numberB;
     }
 
     @Override
@@ -36,5 +35,15 @@ public class DemoServiceImpl implements DemoService {
         user.setName("基层");
         user.setLeader(leader);
         return user;
+    }
+
+    @Override
+    public String print() {
+        return "这是来自服务器中DemoService接口的print方法打印的消息";
+    }
+
+    @Override
+    public int sum(int numberA, int numberB) {
+        return numberA + numberB;
     }
 }

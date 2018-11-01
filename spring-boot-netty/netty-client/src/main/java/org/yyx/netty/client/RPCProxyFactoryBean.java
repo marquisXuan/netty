@@ -16,10 +16,12 @@ import java.lang.reflect.Proxy;
  * contact by tdg_yyx@foxmail.com
  */
 public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements InvocationHandler {
+    /**
+     * RPCProxyFactoryBean 日志输出
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RPCProxyFactoryBean.class);
     private Logger logger = LoggerFactory.getLogger(RPCProxyFactoryBean.class);
-
     private Class interfaceClass;
-
     private NettyClient nettyClient;
 
     @Override
@@ -28,20 +30,23 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
     }
 
     @Override
-    protected Object createInstance() throws Exception {
+    protected Object createInstance() {
         logger.info("[代理工厂] 初始化代理Bean : {}", interfaceClass);
         return Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class[]{interfaceClass}, this);
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) {
+    public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
         final MethodInvokeMeta methodInvokeMeta = WrapMethodUtils.readMethod(interfaceClass, method, args);
-        if (!methodInvokeMeta.getMethodName().equals("toString")) {
-            logger.info("[invoke] 调用接口{},调用方法名：{}，入参：{},参数类型：{}，返回值类型{}",
-                    methodInvokeMeta.getInterfaceClass(), methodInvokeMeta.getMethodName()
-                    , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
+        logger.info("[invoke] 调用接口{},调用方法名：{}，入参：{},参数类型：{}，返回值类型{}",
+                methodInvokeMeta.getInterfaceClass(), methodInvokeMeta.getMethodName()
+                , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
+        try {
+            return nettyClient.remoteCall(methodInvokeMeta, 0);
+        } catch (Exception e) {
+
+            throw e;
         }
-        return nettyClient.remoteCall(methodInvokeMeta, 0);
     }
 
     public void setInterfaceClass(Class interfaceClass) {

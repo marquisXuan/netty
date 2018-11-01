@@ -45,17 +45,12 @@ public class NettyClient {
         worker.shutdownGracefully();
     }
 
-    public Object remoteCall(final MethodInvokeMeta cmd, int retry) {
+    public Object remoteCall(final MethodInvokeMeta cmd, int retry) throws Exception {
+        CustomChannelInitializerClient customChannelInitializer = new CustomChannelInitializerClient(cmd);
+        bootstrap.handler(customChannelInitializer);
         try {
-            CustomChannelInitializerClient customChannelInitializer = new CustomChannelInitializerClient(cmd);
-            bootstrap.handler(customChannelInitializer);
             ChannelFuture sync = bootstrap.connect(url, port).sync();
             sync.channel().closeFuture().sync();
-            Object response = customChannelInitializer.getResponse();
-            LOGGER.info("\n\t⌜⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓\n" +
-                    "\t├ [reponse]: {}\n" +
-                    "\t⌞⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓⎓", response);
-            return response;
         } catch (InterruptedException e) {
             retry++;
             if (retry > MAX_RETRY_TIMES) {
@@ -70,5 +65,13 @@ public class NettyClient {
                 return remoteCall(cmd, retry);
             }
         }
+        Object response;
+        try {
+            response = customChannelInitializer.getResponse();
+        } catch (Exception e) {
+            throw e;
+        }
+        LOGGER.info("{} -> [response] {}", this.getClass().getName(), response);
+        return response;
     }
 }

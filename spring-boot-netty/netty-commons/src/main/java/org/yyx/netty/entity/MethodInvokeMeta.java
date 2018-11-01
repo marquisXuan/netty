@@ -9,9 +9,6 @@ import java.io.Serializable;
 
 /**
  * 记录调用方法的元信息
- * <p>
- * create by 叶云轩 at 2018/3/3-下午1:36
- * contact by tdg_yyx@foxmail.com
  *
  * @author 叶云轩 contact by tdg_yyx@foxmail.com
  * @date 2018/8/14 - 22:46

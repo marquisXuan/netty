@@ -10,6 +10,16 @@
 >
 > [博客园](http://www.cnblogs.com/tdg-yyx/p/8376842.html)
 
+### 更新说明：
+
+------
+
+##### 2018-11-01：
+
+1. 修改异常传输机制，使用异常类进行服务端信息传递，摒弃与HTTP类似的响应码结构体传递信息。添加了异常测试类。主项目仍为[netty-server](./spring-boot-netty/netty-server/README.md)和[netty-client](./spring-boot-netty/netty-client/README.md)。**study-netty**仅仅是学习项目。
+
+------
+
 ### 使用说明：
 
 ### Netty + WebSocket - Server端
@@ -96,5 +106,5 @@ Server端已添加MessagePack解码二进制数据支持。自己写的Client走
 
 #### 作者QQ: 562638362
 
-#### 作者邮箱：tdg_yyx@foxmail.com
+#### 作者邮箱：marquis_xuan@163.com
 

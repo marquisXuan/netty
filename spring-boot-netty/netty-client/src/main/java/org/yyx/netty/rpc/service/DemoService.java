@@ -1,6 +1,7 @@
 package org.yyx.netty.rpc.service;
 
 import org.yyx.netty.entity.User;
+import org.yyx.netty.exception.ErrorParamsException;
 
 /**
  * 测试Service
@@ -14,13 +15,20 @@ import org.yyx.netty.entity.User;
 public interface DemoService {
 
     /**
-     * 求和方法
+     * 除法运算
      *
      * @param numberA 第一个数
      * @param numberB 第二个数
-     * @return 两数之和
+     * @return 结果
      */
-    int sum(int numberA, int numberB);
+    double division(int numberA, int numberB) throws ErrorParamsException;
+
+    /**
+     * 获取用户信息
+     *
+     * @return 用户信息
+     */
+    User getUserInfo();
 
     /**
      * 打印方法
@@ -30,9 +38,11 @@ public interface DemoService {
     String print();
 
     /**
-     * 获取用户信息
+     * 求和方法
      *
-     * @return 用户信息
+     * @param numberA 第一个数
+     * @param numberB 第二个数
+     * @return 两数之和
      */
-    User getUserInfo();
+    int sum(int numberA, int numberB);
 }
