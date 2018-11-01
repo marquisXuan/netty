@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * <p>
- * create by 叶云轩 at 2018/3/3-下午2:13
- * contact by tdg_yyx@foxmail.com
  *
  * @author 叶云轩 contact by tdg_yyx@foxmail.com
  * @date 2018/8/15 - 12:28
@@ -19,36 +17,26 @@ public class PackageClassUtils {
     private final static Logger LOGGER = LoggerFactory.getLogger(PackageClassUtils.class);
 
     /**
-     * 解析包参数
+     * 获取一个目录下的所有文件
      *
-     * @param basePackage 包名
-     * @return 包名字符串集合
+     * @param s
+     * @param file
+     * @param classStrs
      */
-    public static List<String> resolver(String basePackage) {
-        //以";"分割开多个包名
-        String[] splitFHs = basePackage.split(";");
-        List<String> classStrs = new ArrayList<>();
-        //s: com.yyx.util.*
-        for (String s : splitFHs) {
-            LOGGER.info("[加载类目录] {}", s);
-            //路径中是否存在".*" com.yyx.util.*
-            boolean contains = s.contains(".*");
-            if (contains) {
-                //截断星号  com.yyx.util
-                String filePathStr = s.substring(0, s.lastIndexOf(".*"));
-                //组装路径 com/yyx/util
-                String filePath = filePathStr.replaceAll("\\.", "/");
-                //获取路径 xxx/classes/com/yyx/util
-                File file = new File(PackageClassUtils.class.getResource("/").getPath() + "/" + filePath);
-                //获取目录下获取文件
-                getAllFile(filePathStr, file, classStrs);
-            } else {
-                String filePath = s.replaceAll("\\.", "/");
-                File file = new File(PackageClassUtils.class.getResource("/").getPath() + "/" + filePath);
-                classStrs = getClassReferenceList(classStrs, file, s);
-            }
+    private static void getAllFile(String s, File file, List<String> classStrs) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null)
+                for (File file1 : files) {
+                    getAllFile(s, file1, classStrs);
+                }
+        } else {
+            String path = file.getPath();
+            String cleanPath = path.replaceAll("/", ".");
+            String fileName = cleanPath.substring(cleanPath.indexOf(s), cleanPath.length());
+            LOGGER.info("[加载完成] 类文件：{}", fileName);
+            classStrs.add(fileName);
         }
-        return classStrs;
     }
 
     /**
@@ -72,27 +60,36 @@ public class PackageClassUtils {
         return classStrs;
     }
 
-
     /**
-     * 获取一个目录下的所有文件
+     * 解析包参数
      *
-     * @param s
-     * @param file
-     * @param classStrs
+     * @param basePackage 包名
+     * @return 包名字符串集合
      */
-    private static void getAllFile(String s, File file, List<String> classStrs) {
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null)
-                for (File file1 : files) {
-                    getAllFile(s, file1, classStrs);
-                }
-        } else {
-            String path = file.getPath();
-            String cleanPath = path.replaceAll("/", ".");
-            String fileName = cleanPath.substring(cleanPath.indexOf(s), cleanPath.length());
-            LOGGER.info("[加载完成] 类文件：{}", fileName);
-            classStrs.add(fileName);
+    public static List<String> resolver(String basePackage) {
+        // 以";"分割开多个包名
+        String[] splitFHs = basePackage.split(";");
+        List<String> classStrs = new ArrayList<>();
+        // s: com.yyx.util.*
+        for (String s : splitFHs) {
+            LOGGER.info("[加载类目录] {}", s);
+            // 路径中是否存在".*" com.yyx.util.*
+            boolean contains = s.contains(".*");
+            if (contains) {
+                // 截断星号  com.yyx.util
+                String filePathStr = s.substring(0, s.lastIndexOf(".*"));
+                // 组装路径 com/yyx/util
+                String filePath = filePathStr.replaceAll("\\.", "/");
+                // 获取路径 xxx/classes/com/yyx/util
+                File file = new File(PackageClassUtils.class.getResource("/").getPath() + "/" + filePath);
+                // 获取目录下获取文件
+                getAllFile(filePathStr, file, classStrs);
+            } else {
+                String filePath = s.replaceAll("\\.", "/");
+                File file = new File(PackageClassUtils.class.getResource("/").getPath() + "/" + filePath);
+                classStrs = getClassReferenceList(classStrs, file, s);
+            }
         }
+        return classStrs;
     }
 }

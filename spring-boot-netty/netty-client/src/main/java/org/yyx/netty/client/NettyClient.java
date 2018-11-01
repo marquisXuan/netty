@@ -25,12 +25,33 @@ public class NettyClient {
      * Concat at tdg_yyx@foxmail.com
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(NettyClient.class);
+    /**
+     * 初始化Bootstrap实例， 此实例是netty客户端应用开发的入口
+     */
     private Bootstrap bootstrap;
+    /**
+     * 工人线程组
+     */
     private EventLoopGroup worker;
+    /**
+     * 远程端口
+     */
     private int port;
+    /**
+     * 远程服务器url
+     */
     private String url;
+    /**
+     * 默认重连机制为10交
+     */
     private int MAX_RETRY_TIMES = 10;
 
+    /**
+     * 有参构造
+     *
+     * @param url  远程服务器url
+     * @param port 远程端口
+     */
     public NettyClient(String url, int port) {
         this.url = url;
         this.port = port;
@@ -45,9 +66,18 @@ public class NettyClient {
         worker.shutdownGracefully();
     }
 
-    public Object remoteCall(final MethodInvokeMeta cmd, int retry) throws Exception {
-        CustomChannelInitializerClient customChannelInitializer = new CustomChannelInitializerClient(cmd);
+    /**
+     * 真正远程调用的方法
+     *
+     * @param methodInvokeMeta 封装的远程服务信息
+     * @param retry            重连次数
+     * @return 调用结果
+     * @throws Exception 会出现异常
+     */
+    public Object remoteCall(final MethodInvokeMeta methodInvokeMeta, int retry) throws Exception {
+        CustomChannelInitializerClient customChannelInitializer = new CustomChannelInitializerClient(methodInvokeMeta);
         bootstrap.handler(customChannelInitializer);
+        LOGGER.info("{} -> [准备进行netty通信] ", this.getClass().getName());
         try {
             ChannelFuture sync = bootstrap.connect(url, port).sync();
             sync.channel().closeFuture().sync();
@@ -62,7 +92,7 @@ public class NettyClient {
                     e1.printStackTrace();
                 }
                 LOGGER.info("第{}次尝试....失败", retry);
-                return remoteCall(cmd, retry);
+                return remoteCall(methodInvokeMeta, retry);
             }
         }
         Object response;

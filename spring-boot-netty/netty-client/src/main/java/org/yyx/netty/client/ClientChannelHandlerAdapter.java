@@ -15,7 +15,13 @@ import org.yyx.netty.entity.MethodInvokeMeta;
  */
 public class ClientChannelHandlerAdapter extends ChannelHandlerAdapter {
     private Logger logger = LoggerFactory.getLogger(ClientChannelHandlerAdapter.class);
+    /**
+     * 远程服务元信息
+     */
     private MethodInvokeMeta methodInvokeMeta;
+    /**
+     * 用于将通信结果返回
+     */
     private CustomChannelInitializerClient channelInitializerClient;
 
     public ClientChannelHandlerAdapter(MethodInvokeMeta methodInvokeMeta, CustomChannelInitializerClient channelInitializerClient) {
@@ -23,25 +29,39 @@ public class ClientChannelHandlerAdapter extends ChannelHandlerAdapter {
         this.channelInitializerClient = channelInitializerClient;
     }
 
+    /**
+     * 异常方法
+     *
+     * @param channelHandlerContext channelHandlerContext
+     * @param cause                 异常信息
+     */
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+    public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable cause) {
         logger.info("客户端出异常了,异常信息:{}", cause.getMessage());
         cause.printStackTrace();
-        ctx.close();
+        channelHandlerContext.close();
     }
 
+    /**
+     * 通道连接后会自动进入此方法
+     *
+     * @param channelHandlerContext channelHandlerContext
+     */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        if (methodInvokeMeta.getMethodName().endsWith("toString")
-                && !"class java.lang.String".equals(methodInvokeMeta.getReturnType().toString())) {
-            logger.info("客户端发送信息参数:{},信息返回值类型：{}", methodInvokeMeta.getArgs(), methodInvokeMeta.getReturnType());
-        }
-        ctx.writeAndFlush(methodInvokeMeta);
-
+    public void channelActive(ChannelHandlerContext channelHandlerContext) {
+        // 发送远程服务调用信息给服务端
+        channelHandlerContext.writeAndFlush(methodInvokeMeta);
     }
 
+    /**
+     * 通道接收到消息时会进入此方法
+     *
+     * @param channelHandlerContext channelHandlerContext
+     * @param msg                   服务端返回的消息
+     */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) {
+        // 将消息写给 channelInitializerClient
         channelInitializerClient.setResponse(msg);
     }
 }

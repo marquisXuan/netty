@@ -11,17 +11,24 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
+ * JDK动态代理类
  * <p>
- * create by 叶云轩 at 2018/3/3-下午2:09
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author 叶云轩 contact by marquis_xuan@163.com
+ * @date 2018/11/1 - 15:49
  */
 public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements InvocationHandler {
     /**
      * RPCProxyFactoryBean 日志输出
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RPCProxyFactoryBean.class);
-    private Logger logger = LoggerFactory.getLogger(RPCProxyFactoryBean.class);
+    /**
+     * 远程服务接口
+     */
     private Class interfaceClass;
+    /**
+     * netty客户端
+     */
     private NettyClient nettyClient;
 
     @Override
@@ -29,22 +36,41 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
         return interfaceClass;
     }
 
+    /**
+     * 创建实例的方法
+     *
+     * @return 由工厂创建的实例
+     */
     @Override
     protected Object createInstance() {
-        logger.info("[代理工厂] 初始化代理Bean : {}", interfaceClass);
+        LOGGER.info("[代理工厂] 初始化代理Bean : {}", interfaceClass);
+        // 返回代理类
         return Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class[]{interfaceClass}, this);
     }
 
+    /**
+     * 动态调用方法的方法
+     * 该方法不会显示调用
+     *
+     * @param proxy  被代理的实例
+     * @param method 调用的方法
+     * @param args   参数列表
+     * @return 返回值
+     * @throws Exception 异常
+     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
+        LOGGER.info("{} -> [准备进行远程服务调用] ", this.getClass().getName());
+        LOGGER.info("{} -> [封装调用信息] ", this.getClass().getName());
         final MethodInvokeMeta methodInvokeMeta = WrapMethodUtils.readMethod(interfaceClass, method, args);
-        logger.info("[invoke] 调用接口{},调用方法名：{}，入参：{},参数类型：{}，返回值类型{}",
-                methodInvokeMeta.getInterfaceClass(), methodInvokeMeta.getMethodName()
+        LOGGER.info("{} -> [远程服务调用封装完毕] 调用接口 -> {}\n调用方法 -> {}\n参数列表 -> {} \n 参数类型 -> {}" +
+                        "\n 返回值类型 -> {}", this.getClass().getName(), methodInvokeMeta.getInterfaceClass(), methodInvokeMeta.getMethodName()
                 , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
         try {
+            // 真正开始使用netty进行通信的方法
+            // todo 修改的地方 ，待添加心跳机制，将netty连接时机修改到循环外，不要每次都进行连接
             return nettyClient.remoteCall(methodInvokeMeta, 0);
         } catch (Exception e) {
-
             throw e;
         }
     }

@@ -7,7 +7,7 @@ import org.yyx.netty.client.NettyClient;
 import org.yyx.netty.rpc.util.NettyBeanScanner;
 
 /**
- * Netty初始化
+ * Netty相关的初始化入口
  * <p>
  *
  * @author 叶云轩 contact by tdg_yyx@foxmail.com
@@ -16,9 +16,17 @@ import org.yyx.netty.rpc.util.NettyBeanScanner;
 @Configuration
 public class NettyConfiguration {
 
+    /**
+     * 初始化加载Netty相关bean的配置方法
+     *
+     * @param basePackage 配置的包名
+     * @param clientName  配置的Netty实例对象名
+     * @return
+     */
     @Bean
     public static NettyBeanScanner initNettyBeanScanner(@Value("${netty.basePackage}") String basePackage,
-                                                 @Value("${netty.clientName}") String clientName) {
+                                                        @Value("${netty.clientName}") String clientName) {
+        // 创建对象
         return new NettyBeanScanner(basePackage, clientName);
     }
 

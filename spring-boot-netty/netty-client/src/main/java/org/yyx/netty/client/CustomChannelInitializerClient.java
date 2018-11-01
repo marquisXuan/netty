@@ -5,8 +5,6 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.yyx.netty.entity.MethodInvokeMeta;
 import org.yyx.netty.entity.NullWritable;
 import org.yyx.netty.util.ObjectCodec;
@@ -19,21 +17,25 @@ import org.yyx.netty.util.ObjectCodec;
  */
 public class CustomChannelInitializerClient extends ChannelInitializer<SocketChannel> {
 
-    private Logger logger = LoggerFactory.getLogger(CustomChannelInitializerClient.class);
-
+    /**
+     * 远程服务元信息
+     */
     private MethodInvokeMeta methodInvokeMeta;
-
+    /**
+     * 远程服务响应结果
+     */
     private Object response;
 
     public CustomChannelInitializerClient(MethodInvokeMeta methodInvokeMeta) {
-        logger.info("[CustomChannelInitializerClient] 调用方法名：{}，入参：{},参数类型：{}，返回值类型{}"
-                , methodInvokeMeta.getMethodName()
-                , methodInvokeMeta.getArgs()
-                , methodInvokeMeta.getParameterTypes()
-                , methodInvokeMeta.getReturnType());
         this.methodInvokeMeta = methodInvokeMeta;
     }
 
+    /**
+     * 获取远程服务结果响应的方法
+     *
+     * @return {@link Object}响应结果
+     * @throws Exception
+     */
     public Object getResponse() throws Exception {
         if (response instanceof NullWritable) {
             // 空值返回
@@ -50,12 +52,20 @@ public class CustomChannelInitializerClient extends ChannelInitializer<SocketCha
         this.response = response;
     }
 
+    /**
+     * 初始化通道信息
+     *
+     * @param ch
+     */
     @Override
     protected void initChannel(SocketChannel ch) {
         ChannelPipeline pipeline = ch.pipeline();
+        // 基于定长的方式解决粘包/拆包问题
         pipeline.addLast(new LengthFieldPrepender(2));
         pipeline.addLast(new LengthFieldBasedFrameDecoder(1024 * 1024, 0, 2, 0, 2));
+        // 序列化方式 可使用 MsgPack 或 Protobuf 进行序列化扩展 具体可参考study-netty项目下的相关使用例子
         pipeline.addLast(new ObjectCodec());
+        // 实际做处理的适配器
         pipeline.addLast(new ClientChannelHandlerAdapter(methodInvokeMeta, this));
     }
 }

@@ -17,12 +17,15 @@
 ##### 2018-11-01：
 
 1. 修改异常传输机制，使用异常类进行服务端信息传递，摒弃与HTTP类似的响应码结构体传递信息。添加了异常测试类。主项目仍为[netty-server](./spring-boot-netty/netty-server/README.md)和[netty-client](./spring-boot-netty/netty-client/README.md)。**study-netty**仅仅是学习项目。
+2. 添加客户端阅读说明，说明我的思路。
 
 ------
 
 ### 使用说明：
 
 ### Netty + WebSocket - Server端
+
+#### PS:已单独出另外一个项目进行细写[netty-websocket](https://github.com/marquisXuan/xpush)
 
 此次更新主要添加了一个基于netty的websocket服务，可以做到群发消息，也可以做到点对点发送消息。代码在**stude-netty/study-server/src/main/java/org/yyx/netty/study/websocket**这里只给出了服务器代码，客户端代码采用的是**Chrome浏览器上的Simple Web Socket Client插件，省去了自己写页面的麻烦**。
 
