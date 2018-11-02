@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>org.yyx.netty</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>netty-commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

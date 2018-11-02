@@ -68,7 +68,7 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
                 , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
         try {
             // 真正开始使用netty进行通信的方法
-            // todo 修改的地方 ，待添加心跳机制，将netty连接时机修改到循环外，不要每次都进行连接
+            // todo 修改的地方将netty连接时机修改到循环外，不要每次都进行连接
             return nettyClient.remoteCall(methodInvokeMeta, 0);
         } catch (Exception e) {
             throw e;

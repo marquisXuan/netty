@@ -13,6 +13,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import org.yyx.netty.util.ObjectCodec;
 
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Netty服务器监听器
@@ -91,9 +93,13 @@ public class NettyServerListener {
                 @Override
                 protected void initChannel(SocketChannel ch) {
                     ChannelPipeline pipeline = ch.pipeline();
+                    // 添加心跳支持
+                    pipeline.addLast(new IdleStateHandler(5, 0, 0, TimeUnit.SECONDS));
+                    // 基于定长的方式解决粘包/拆包问题
                     pipeline.addLast(new LengthFieldBasedFrameDecoder(nettyConfig.getMaxFrameLength()
                             , 0, 2, 0, 2));
                     pipeline.addLast(new LengthFieldPrepender(2));
+                    // 序列化
                     pipeline.addLast(new ObjectCodec());
                     pipeline.addLast(channelHandlerAdapter);
                 }

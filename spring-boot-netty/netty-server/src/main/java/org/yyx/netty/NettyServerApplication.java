@@ -14,13 +14,13 @@ import javax.annotation.Resource;
  * @date 2018/7/9 - 上午9:33
  */
 @SpringBootApplication
-public class NettyApplication implements CommandLineRunner {
+public class NettyServerApplication implements CommandLineRunner {
 
     @Resource
     private NettyServerListener nettyServerListener;
 
     public static void main(String[] args) {
-        SpringApplication.run(NettyApplication.class, args);
+        SpringApplication.run(NettyServerApplication.class, args);
     }
 
     @Override

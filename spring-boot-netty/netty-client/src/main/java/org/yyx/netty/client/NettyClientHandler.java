@@ -27,7 +27,7 @@ public class NettyClientHandler extends ChannelInitializer<SocketChannel> {
         // 序列化方式 可使用 MsgPack 或 Protobuf 进行序列化扩展 具体可参考study-netty项目下的相关使用例子
         pipeline.addLast(new ObjectCodec());
         // 心跳机制
-        pipeline.addLast(new IdleStateHandler(5, 10, 0, TimeUnit.SECONDS));
+        pipeline.addLast(new IdleStateHandler(3, 10, 0, TimeUnit.SECONDS));
         pipeline.addLast(new NettyClientHandlerAdapter());
     }
 }

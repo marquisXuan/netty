@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2018/8/15 - 12:29
  */
 @SpringBootApplication
-public class ClientApplication {
+public class NettyClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ClientApplication.class, args);
+        SpringApplication.run(NettyClientApplication.class, args);
     }
 }
