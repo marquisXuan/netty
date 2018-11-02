@@ -4,11 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.yyx.netty.entity.MethodInvokeMeta;
+import org.yyx.netty.exception.ErrorParamsException;
+import org.yyx.netty.rpc.util.ChannelUtil;
 import org.yyx.netty.rpc.util.WrapMethodUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
 
 /**
  * JDK动态代理类
@@ -68,8 +71,18 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
                 , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
         try {
             // 真正开始使用netty进行通信的方法
-            // todo 修改的地方将netty连接时机修改到循环外，不要每次都进行连接
-            return nettyClient.remoteCall(methodInvokeMeta, 0);
+//            return nettyClient.remoteCall(methodInvokeMeta, 0);
+            String uuid = System.currentTimeMillis() + UUID.randomUUID().toString();
+            ChannelUtil.remoteCall(methodInvokeMeta, uuid);
+            Object result;
+            do {
+                result = ChannelUtil.getResult(uuid);
+            } while (result == null);
+            // 服务器有可能返回异常信息，所以在这里可以进行异常处理
+            if (result instanceof ErrorParamsException) {
+                throw (ErrorParamsException) result;
+            }
+            return result;
         } catch (Exception e) {
             throw e;
         }

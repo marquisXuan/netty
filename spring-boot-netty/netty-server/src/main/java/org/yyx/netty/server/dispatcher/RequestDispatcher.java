@@ -74,9 +74,11 @@ public class RequestDispatcher implements ApplicationContextAware {
             Object result = method.invoke(targetObject, args);
             if (result == null) {
                 // 方法没有返回值，返回NullWritable对象
+                LOGGER.info("{} -> [方法没有返回值，返回NullWritable对象]", this.getClass().getName());
                 channelFuture = channelHandlerContext.writeAndFlush(NullWritable.nullWritable());
             } else {
                 // 将方法执行结果写入到Channel
+                LOGGER.info("{} -> [返回结果] {}", this.getClass().getName(), result);
                 channelFuture = channelHandlerContext.writeAndFlush(result);
             }
             /*
@@ -99,7 +101,7 @@ public class RequestDispatcher implements ApplicationContextAware {
             channelFuture = channelHandlerContext.writeAndFlush(targetException);
         } finally {
             if (channelFuture != null) {
-                channelFuture.addListener(ChannelFutureListener.CLOSE);
+//                channelFuture.addListener(ChannelFutureListener.CLOSE);
             }
         }
     }
