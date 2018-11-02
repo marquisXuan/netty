@@ -42,17 +42,17 @@ public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
     /**
      * 服务器接收到消息时进行进行的处理
      *
-     * @param ctx
+     * @param channelHandlerContext
      * @param msg
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) {
         // 转换为MethodInvokeMeta
         MethodInvokeMeta invokeMeta = (MethodInvokeMeta) msg;
         LOGGER.info("{} -> [客户端信息] \n 方法名  - > {} \n 参数列表  -> {} \n " +
                         "返回值  ->  {} ", this.getClass().getName(), invokeMeta.getMethodName(), invokeMeta.getArgs()
                 , invokeMeta.getReturnType());
         // 具体的处理类
-        this.dispatcher.dispatcher(ctx, invokeMeta);
+        this.dispatcher.dispatcher(channelHandlerContext, invokeMeta);
     }
 }
