@@ -29,10 +29,6 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
      * 远程服务接口
      */
     private Class interfaceClass;
-    /**
-     * netty客户端
-     */
-    private NettyClient nettyClient;
 
     @Override
     public Class<?> getObjectType() {
@@ -59,40 +55,33 @@ public class RPCProxyFactoryBean extends AbstractFactoryBean<Object> implements 
      * @param method 调用的方法
      * @param args   参数列表
      * @return 返回值
-     * @throws Exception 异常
      */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
+    public Object invoke(Object proxy, Method method, Object[] args) throws ErrorParamsException {
         LOGGER.info("{} -> [准备进行远程服务调用] ", this.getClass().getName());
         LOGGER.info("{} -> [封装调用信息] ", this.getClass().getName());
         final MethodInvokeMeta methodInvokeMeta = WrapMethodUtils.readMethod(interfaceClass, method, args);
         LOGGER.info("{} -> [远程服务调用封装完毕] 调用接口 -> {}\n调用方法 -> {}\n参数列表 -> {} \n 参数类型 -> {}" +
                         "\n 返回值类型 -> {}", this.getClass().getName(), methodInvokeMeta.getInterfaceClass(), methodInvokeMeta.getMethodName()
                 , methodInvokeMeta.getArgs(), methodInvokeMeta.getParameterTypes(), methodInvokeMeta.getReturnType());
-        try {
-            // 真正开始使用netty进行通信的方法
-//            return nettyClient.remoteCall(methodInvokeMeta, 0);
-            String uuid = System.currentTimeMillis() + UUID.randomUUID().toString();
-            ChannelUtil.remoteCall(methodInvokeMeta, uuid);
-            Object result;
-            do {
-                result = ChannelUtil.getResult(uuid);
-            } while (result == null);
-            // 服务器有可能返回异常信息，所以在这里可以进行异常处理
-            if (result instanceof ErrorParamsException) {
-                throw (ErrorParamsException) result;
-            }
-            return result;
-        } catch (Exception e) {
-            throw e;
+        // 构造一个时间戳
+        String uuid = System.currentTimeMillis() + UUID.randomUUID().toString();
+        // 真正开始使用netty进行通信的方法
+        ChannelUtil.remoteCall(methodInvokeMeta, uuid);
+        Object result;
+        do {
+            // 接收返回信息
+            result = ChannelUtil.getResult(uuid);
+        } while (result == null);
+        // 服务器有可能返回异常信息，所以在这里可以进行异常处理
+        if (result instanceof ErrorParamsException) {
+            throw (ErrorParamsException) result;
         }
+        return result;
     }
 
     public void setInterfaceClass(Class interfaceClass) {
         this.interfaceClass = interfaceClass;
     }
 
-    public void setNettyClient(NettyClient nettyClient) {
-        this.nettyClient = nettyClient;
-    }
 }

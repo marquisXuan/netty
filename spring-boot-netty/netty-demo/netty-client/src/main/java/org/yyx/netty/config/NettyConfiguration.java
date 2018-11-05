@@ -3,7 +3,6 @@ package org.yyx.netty.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.yyx.netty.client.NettyClient;
 import org.yyx.netty.rpc.util.NettyBeanScanner;
 
 /**
@@ -21,17 +20,12 @@ public class NettyConfiguration {
      *
      * @param basePackage 配置的包名
      * @param clientName  配置的Netty实例对象名
-     * @return
+     * @return NettyBeanScanner
      */
     @Bean
     public static NettyBeanScanner initNettyBeanScanner(@Value("${netty.basePackage}") String basePackage,
                                                         @Value("${netty.clientName}") String clientName) {
         // 创建对象
         return new NettyBeanScanner(basePackage, clientName);
-    }
-
-    @Bean("nettyClient")
-    public static NettyClient initNettyClient(@Value("${netty.url}") String url, @Value("${netty.port}") int port) {
-        return new NettyClient(url, port);
     }
 }

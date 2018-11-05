@@ -47,6 +47,6 @@ public class NettyClientListener implements CommandLineRunner {
         t1.start();
         int port = nettyConfig.getPort();
         String url = nettyConfig.getUrl();
-        new NettyClient2(port, url).start();
+        new NettyClient(port, url).start();
     }
 }
