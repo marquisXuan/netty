@@ -17,10 +17,9 @@
     </description>
 
     <modules>
-        <module>netty-server</module>
-        <module>netty-client</module>
         <module>study-netty</module>
         <module>netty-commons</module>
+        <module>netty-demo</module>
     </modules>
 
     <parent>

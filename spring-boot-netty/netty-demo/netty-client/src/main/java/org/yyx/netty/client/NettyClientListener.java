@@ -39,7 +39,7 @@ public class NettyClientListener implements CommandLineRunner {
         LOGGER.info("{} -> [准备进行与服务端通信]", this.getClass().getName());
         Thread t1 = new Thread(() -> {
             try {
-                mainAction.cal();
+                mainAction.call();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

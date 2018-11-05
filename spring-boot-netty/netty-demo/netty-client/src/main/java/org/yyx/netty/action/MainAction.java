@@ -9,7 +9,7 @@ import org.yyx.netty.rpc.service.DemoService;
 import javax.annotation.Resource;
 
 /**
- * 程序主入口
+ * 主要用来进行模拟测试的类.就不用写接口来进行测试了
  * <p>
  *
  * @author 叶云轩 at tdg_yyx@foxmail.com
@@ -29,8 +29,11 @@ public class MainAction {
     @Resource
     private DemoService demoService;
 
-
-    public void cal() throws InterruptedException {
+    /**
+     * 真正远程调用的方法
+     * @throws InterruptedException interruptedException
+     */
+    public void call() throws InterruptedException {
         // 用于模拟服务器正常启动后，人工调用远程服务代码
         Thread.sleep(10 * 1000);
         LOGGER.warn("[准备进行业务测试]");

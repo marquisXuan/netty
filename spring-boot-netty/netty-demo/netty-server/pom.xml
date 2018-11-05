@@ -14,7 +14,7 @@
 
     <parent>
         <groupId>org.yyx.netty</groupId>
-        <artifactId>spring-boot-netty</artifactId>
+        <artifactId>netty-demo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
