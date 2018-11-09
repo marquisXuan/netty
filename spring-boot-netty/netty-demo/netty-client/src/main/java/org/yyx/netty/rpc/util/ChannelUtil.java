@@ -22,26 +22,48 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @date 2018/11/2-15:39
  */
 public class ChannelUtil {
-
+    /**
+     * 用于记录c-s连接后建立的通道
+     */
     private static final Set<Channel> CHANNELS = new ConcurrentSkipListSet<>();
     /**
      * ChannelUtil日志输出
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(ChannelUtil.class);
-
+    /**
+     * 用于记录通道响应的结果集
+     */
     private static final Map<String, Object> RESULT_MAP = new ConcurrentHashMap<>();
 
     private ChannelUtil() {
     }
 
+    /**
+     * 计算结果集（存储响应结果）
+     *
+     * @param key    唯一标识
+     * @param result 结果集
+     */
     public static void calculateResult(String key, Object result) {
         RESULT_MAP.put(key, result);
     }
 
+    /**
+     * 获取结果集的key
+     *
+     * @param key 保存的唯一标识
+     * @return 结果集的 key (通道标识)
+     */
     public static String getResultKey(String key) {
         return (String) getResult(key);
     }
 
+    /**
+     * 根据结果集的 key 获取结果集
+     *
+     * @param key 结果集的key
+     * @return 结果集
+     */
     public static Object getResult(String key) {
         return RESULT_MAP.get(key);
     }
