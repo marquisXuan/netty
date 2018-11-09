@@ -40,7 +40,7 @@ public class NettyClient {
      */
     private String url;
     /**
-     * 默认重连机制为10交
+     * 默认重连机制为10次
      */
     private int MAX_RETRY_TIMES = 10;
 
